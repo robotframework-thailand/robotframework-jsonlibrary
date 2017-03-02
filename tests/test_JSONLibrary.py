@@ -20,7 +20,7 @@ class JSONLibraryTest(unittest.TestCase):
         json_path = '$..address'
         data_to_add = {'latitude': '13.1234', 'longitude': '130.1234'}
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
-        self.assertTrue(set(data_to_add.items()).issubset(set(json_object['address'].items())))
+        self.assertDictContainsSubset(data_to_add, json_object['address'])
 
     def test_add_new_object_to_root(self):
         json_path = '$'
@@ -62,6 +62,10 @@ class JSONLibraryTest(unittest.TestCase):
         json_path = '$..isMarried'
         json_object = self.test.delete_object_from_json(self.json, json_path)
         self.assertFalse('isMarried' in json_object)
+
+    def test_convert_json_to_string(self):
+        json_str = self.test.convert_json_to_string(self.json)
+        self.assertTrue(isinstance(json_str, str))
 
     def tearDown(self):
         pass

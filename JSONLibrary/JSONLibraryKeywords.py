@@ -121,3 +121,17 @@ class JSONLibraryKeywords(object):
                 del(match.context.value[match.path.fields[0]])
         return json_object
 
+    @keyword('Convert JSON To String')
+    def convert_json_to_string(self, json_object):
+        """Convert JSON object to string
+
+        Arguments:
+            - json_object: json as a dictionary object.
+
+        Return new json_string
+
+        Examples:
+        | ${json_str}=  |  Convert JSON To String | ${json_obj} |
+        """
+        return json.dumps(json_object)
+
