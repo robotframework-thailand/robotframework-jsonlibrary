@@ -25,10 +25,20 @@ pip install -U robotframework-jsonlibrary
 ```
 # Example Test Case
 
-*** Settings *** |              |
------------------|--------------|
-Library          | JSONLibrary  |
-Library          | Collections  |
+*** Settings ***  |                     |                  |            |                  |
+----------------- |-------------------- |----------------- |----------- |----------------- |
+Library           | JSONLibrary         |                  |            |                  |
+*** Test Cases ***|                     |                  |            |                  |
+${json_obj}=      | Load JSON From File | example.json     |            |                  |
+${object_to_add}= | Create Dictionary   | country=Thailand |            |                  |
+${json_obj}=      | Add Object To Json  | ${json_obj}      | $..address | ${object_to_add} |
+${value}=         | Get Value From Json | ${json_obj}      | $..country |                  |
+|Should Be Equal As Strings | ${value[0]} | Thailand       |            |                  |
+|${value_to_update}=| Set Variable     | Japan             |            |                  |
+|${json_obj}=     | Update Value To Json | ${json_obj}     | $..country | ${value_to_update}|
+|Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
+
+
 
 
 
