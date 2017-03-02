@@ -30,7 +30,7 @@ setup(
     description="robotframework json jsonpath",
     author="Traitanit Huangsri",
     author_email='traitanit.hua@gmail.com',
-    url='git@github.com:nottyo/robotframework-jsonlibrary.git',
+    url='https://github.com/nottyo/robotframework-jsonlibrary.git',
     packages=[
         'JSONLibrary'
     ],
