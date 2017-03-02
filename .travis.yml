@@ -4,3 +4,11 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 script: make clean coverage docs dist
+deploy:
+  provider: pypi
+  user: "nottyo"
+  password:
+    secure: "LX0Qw6ak7oiksf76GUnSqN4qJhTUXqbmwfKZRc9fGniZtsN2Lx4XNGAXHNo3ge4cbpDEnnNvaKb3eOwO4+UQr6TL3Oj5LYn7Ni2BisIVWRUj4lpXo7V93G2I1VKzJQfWW0RJJcOGzdrQV7QJTrlbnHkg7IBWVib1AAoDK8+ISnJw/LiWZmffvFQvLI0clX4usopCzYwItGHLjD4b++yKmGkTLK5cq2fHlGRGa2NTxmP0rmkHyINw0FLULzndGCn5fLhGtd5MvHid04aKquRx1wDk3Kcuv8xXH2RxdYjeTOdJd34ZFfZBeuQeFXR3/oPopFJpdfHEvdJ0I8ghcIGPBDNx3gHhkCP4gZ0btk8Epzj2mKq1AIW/Rq08PG2SKzRu/uQynERy9mw8uexLRi80LwwuPySX/UqjzVXCcUwJ0PlZsUdc0yhsjCDs6aJmgI34Wrrxu/RezJcUOubPXYAS6whsYPJTL2dFQy0YQJusn2L7dBU5OEE90EoKHbzoRwzHZvVgzCN0LNUWfQJO2v1gZ4aKJ0+rEWEjI1sO03AeeCpJLcmsYWU/1frC9f2zSn5m8dWsL2H1ly/FCcGxEFH8OoEA5Ye9JEtq8r7BY/AZwrKOdZ3D9Y5mWhVDWG4I+h9jyrU5//hvmKcy2rtoF9C68e7EW+IQ4wbck/iBueLAlls="
+  on:
+    tags: true
+
