@@ -54,13 +54,11 @@ coverage: ## check code coverage quickly with the default Python
 		coverage run --source JSONLibrary setup.py test
 		coverage report -m
 		coverage html
-		$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/robotframework-jsonlibrary.rst
 	rm -f docs/modules.rst
 	python generate.py
-	$(BROWSER) docs/JSONLibrary.html
 
 release: clean ## package and upload a release
 	python setup.py sdist upload
