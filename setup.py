@@ -15,12 +15,21 @@ test_requirements = [
     # TODO: put package test requirements here
 ]
 
+
+CLASSIFIERS = """
+Development Status :: 5 - Production/Stable
+License :: Public Domain
+Operating System :: OS Independent
+Programming Language :: Python
+Topic :: Software Development :: Testing
+"""[1:-1]
+
 setup(
     name='robotframework-jsonlibrary',
     version=VERSION,
     description="robotframework json jsonpath",
     author="Traitanit Huangsri",
-    author_email='traitanit.hua@ascendcorp.com',
+    author_email='traitanit.hua@gmail.com',
     url='git@github.com:nottyo/robotframework-jsonlibrary.git',
     packages=[
         'JSONLibrary'
@@ -31,18 +40,7 @@ setup(
     install_requires=requirements,
     zip_safe=False,
     keywords='robotframework-jsonlibrary',
-    classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: QA',
-        'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-    ],
+    classifiers=CLASSIFIERS.splitlines(),
     test_suite='tests',
     tests_require=test_requirements
 )
