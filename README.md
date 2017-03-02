@@ -38,7 +38,13 @@ ${value}=         | Get Value From Json | ${json_obj}      | $..country |       
 |${json_obj}=     | Update Value To Json | ${json_obj}     | $..country | ${value_to_update}|
 |Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
 
+# Documentation
+For the detail keyword documentation. Go to this following link:
 
+https://nottyo.github.io/robotframework-jsonlibrary/
+
+#Help & Issues
+Mention me on Twitter [@nottyo](https://twitter.com/nottyo) 
 
 
 
