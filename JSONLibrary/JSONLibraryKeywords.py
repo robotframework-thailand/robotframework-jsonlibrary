@@ -4,7 +4,8 @@ from robot.api.deco import keyword
 from version import VERSION
 import os.path
 import json
-from jsonpath_rw import Index, parse, Fields
+from jsonpath_rw import Index, Fields
+from jsonpath_rw_ext import parse
 
 __author__ = 'Traitanit Huangsri'
 __email__ = 'traitanit.hua@gmail.com'
