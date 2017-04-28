@@ -8,7 +8,8 @@ requirements = [
     'tox',
     'coverage',
     'robotframework>=3.0',
-    'jsonpath-rw==1.4.0'
+    'jsonpath-rw==1.4.0',
+    'jsonpath-rw-ext>=0.1.9'
 ]
 
 test_requirements = [
