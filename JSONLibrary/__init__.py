@@ -25,6 +25,16 @@ class JSONLibrary(JSONLibraryKeywords):
     | ?()      | applies a filter (script) expression. |
     | ()       | script expression, using the underlying script engine. |
 
+    == *** Known issue *** ==
+    If there is a space in JSONPath expression, the module used by this library will throw an exception.
+    Therefore, please avoid the space in JSONPath expression if possible.
+
+    *Example:*
+    | JSONPath | Exception? |
+    | $.[?(@.id == 1)] | Y |
+    | $.[?(@.id==1)] | N |
+    | $.[?(@.name=='test 123')] | N |
+    
     == Example Test Cases ==
     | *** Settings ***     |
     | Library              | JSONLibrary |
