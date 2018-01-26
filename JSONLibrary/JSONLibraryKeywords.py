@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 from robot.api import logger
 from robot.api.deco import keyword
-from version import VERSION
+
+try:
+    from version import VERSION
+except:
+    from JSONLibrary.version import VERSION
+
 import os.path
 import json
 from jsonpath_rw import Index, Fields
