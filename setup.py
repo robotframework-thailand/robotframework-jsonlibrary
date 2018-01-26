@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-from JSONLibrary.version import VERSION
+
+# importing this has the unwanted side-effect of importing
+# other required packages that may not be installed yet
+# resulting in an error
+#from JSONLibrary.version import VERSION
+
+VERSION = '0.2'
 
 requirements = [
     'tox',
