@@ -136,3 +136,17 @@ class JSONLibraryKeywords(object):
         """
         return json.dumps(json_object)
 
+    @keyword('Convert String to JSON')
+    def convert_string_to_json(self, json_string):
+        """Convert String to JSON object
+
+        Arguments:
+            - json_string: JSON string
+
+        Return new json_object
+
+        Examples:
+        | ${json_object}=  |  Convert String to JSON | ${json_string} |
+        """
+        return json.loads(json_string)
+
