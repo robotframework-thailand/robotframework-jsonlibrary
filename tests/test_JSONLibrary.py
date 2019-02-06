@@ -67,5 +67,9 @@ class JSONLibraryTest(unittest.TestCase):
         json_str = self.test.convert_json_to_string(self.json)
         self.assertTrue(isinstance(json_str, str))
 
+    def test_convert_string_to_json(self):
+        json_obj = self.test.convert_string_to_json('{"firstName": "John"}')
+        self.assertTrue("firstName" in json_obj)
+
     def tearDown(self):
         pass

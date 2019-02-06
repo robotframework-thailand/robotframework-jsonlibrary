@@ -1,8 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
 from setuptools import setup
-from JSONLibrary.version import VERSION
+
+# Read version from file without loading the module
+with open('JSONLibrary/version.py', 'r') as version_file:
+    version_match = re.search(r"^VERSION ?= ?['\"]([^'\"]*)['\"]",
+                              version_file.read(), re.M)
+if version_match:
+    VERSION=version_match.group(1)
+else:
+    VERSION='0.1' #
 
 requirements = [
     'tox',

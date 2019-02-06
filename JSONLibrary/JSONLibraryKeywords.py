@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+import json
+import os.path
 from robot.api import logger
 from robot.api.deco import keyword
-from version import VERSION
-import os.path
-import json
 from jsonpath_rw import Index, Fields
 from jsonpath_rw_ext import parse
+from .version import VERSION
 
 __author__ = 'Traitanit Huangsri'
 __email__ = 'traitanit.hua@gmail.com'
@@ -72,7 +72,7 @@ class JSONLibraryKeywords(object):
         Return array of values
 
         Examples:
-        | ${values}=  |  Get Value From Jsonpath  | ${json} |  $..phone_number |
+        | ${values}=  |  Get Value From Json  | ${json} |  $..phone_number |
         """
         json_path_expr = parse(json_path)
         return [match.value for match in json_path_expr.find(json_object)]
@@ -135,4 +135,18 @@ class JSONLibraryKeywords(object):
         | ${json_str}=  |  Convert JSON To String | ${json_obj} |
         """
         return json.dumps(json_object)
+
+    @keyword('Convert String to JSON')
+    def convert_string_to_json(self, json_string):
+        """Convert String to JSON object
+
+        Arguments:
+            - json_string: JSON string
+
+        Return new json_object
+
+        Examples:
+        | ${json_object}=  |  Convert String to JSON | ${json_string} |
+        """
+        return json.loads(json_string)
 
