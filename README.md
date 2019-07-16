@@ -41,7 +41,7 @@ ${value}=         | Get Value From Json | ${json_obj}      | $..country |       
 # Documentation
 For the detail keyword documentation. Go to this following link:
 
-https://nottyo.github.io/robotframework-jsonlibrary/
+https://robotframework-thailand.github.io/robotframework-jsonlibrary/
 
 #Help & Issues
 Mention me on Twitter [@nottyo](https://twitter.com/nottyo) 
