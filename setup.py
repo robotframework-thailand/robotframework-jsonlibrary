@@ -14,7 +14,7 @@ else:
     VERSION='0.1' #
 
 requirements = [
-    'tox',
+    'tox==3.0.0',
     'coverage',
     'robotframework>=3.0',
     'jsonpath-rw==1.4.0',
