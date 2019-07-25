@@ -11,5 +11,5 @@ deploy:
   on:
     tags: true
     distributions: sdist bdist_wheel
-    repo: nottyo/robotframework-jsonlibrary
+    repo: robotframework-thailand/robotframework-jsonlibrary
 
