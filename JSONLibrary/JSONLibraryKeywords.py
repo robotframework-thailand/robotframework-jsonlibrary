@@ -33,7 +33,7 @@ class JSONLibraryKeywords(object):
         if os.path.isfile(file_name) is False:
             logger.error("JSON file: " + file_name + " not found")
             raise IOError
-        with open(file_name) as json_file:
+        with open(file_name, encoding="UTF-8") as json_file:
             data = json.load(json_file)
         return data
 
