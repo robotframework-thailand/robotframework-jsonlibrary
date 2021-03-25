@@ -150,3 +150,14 @@ class JSONLibraryKeywords(object):
         """
         return json.loads(json_string)
 
+    @keyword('Dump JSON to file')
+    def dump_json_to_file(self, dest_file, json_object, encoding="utf-8"):
+        json_str = self.convert_json_to_string(json_object)
+        with open(dest_file, "w", encoding=encoding) as json_file:
+            json_file.write(json_str)
+        return str(dest_file)
+            
+        
+        
+        
+        

@@ -7,3 +7,18 @@ dist
 build
 htmlcov
 result
+
+# PyDev/RED
+.settings
+.project
+.pydevproject
+__pycache__
+red.xml
+/libspecs/
+/Results/
+
+#pipenv/virtualenv
+.venv
+Pipfile
+Pipfile.lock
+

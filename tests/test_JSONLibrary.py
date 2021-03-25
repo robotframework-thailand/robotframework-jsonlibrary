@@ -70,6 +70,17 @@ class JSONLibraryTest(unittest.TestCase):
     def test_convert_string_to_json(self):
         json_obj = self.test.convert_string_to_json('{"firstName": "John"}')
         self.assertTrue("firstName" in json_obj)
+        
+    def test_dump_json_to_file(self):
+        from pathlib import Path
+        if os.name == "nt":
+            tmp_path = os.getenv("TMP", "c:\\Temp\\")
+        else:
+            tmp_path = os.getenv("TMP", "/tmp/")
+        file_path = f"{tmp_path}sample.json"
+        json_file = self.test.dump_json_to_file(file_path, self.json)
+        self.assertTrue(os.path.exists(file_path))
+        
 
     def tearDown(self):
         pass
