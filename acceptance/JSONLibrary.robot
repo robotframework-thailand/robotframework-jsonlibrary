@@ -2,7 +2,6 @@
 Library         JSONLibrary
 Library         Collections
 Library         String
-Library         OperatingSystem    
 Test Setup      SetUp Test
 Default Tags    JSONLibrary
 
