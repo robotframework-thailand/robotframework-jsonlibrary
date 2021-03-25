@@ -77,7 +77,7 @@ class JSONLibraryTest(unittest.TestCase):
             tmp_path = os.getenv("TMP", "c:\\Temp\\")
         else:
             tmp_path = os.getenv("TMP", "/tmp/")
-        file_path = f"{tmp_path}sample.json"
+        file_path = "%ssample.json" % (tmp_path)
         json_file = self.test.dump_json_to_file(file_path, self.json)
         self.assertTrue(os.path.exists(file_path))
         
