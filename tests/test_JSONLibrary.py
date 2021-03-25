@@ -72,7 +72,6 @@ class JSONLibraryTest(unittest.TestCase):
         self.assertTrue("firstName" in json_obj)
         
     def test_dump_json_to_file(self):
-        from pathlib import Path
         if os.name == "nt":
             tmp_path = os.getenv("TMP", "c:\\Temp\\")
         else:
