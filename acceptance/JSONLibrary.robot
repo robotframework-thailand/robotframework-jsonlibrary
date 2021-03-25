@@ -1,6 +1,7 @@
 *** Settings ***
 Library         JSONLibrary
 Library         Collections
+Library         OperatingSystem    
 Library         String
 Test Setup      SetUp Test
 Default Tags    JSONLibrary
