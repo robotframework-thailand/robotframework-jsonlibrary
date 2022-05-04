@@ -4,7 +4,7 @@ import json
 import os.path
 from robot.api import logger
 from robot.api.deco import keyword
-from robot.utils.asserts import assert_true
+from robot.utils.asserts import assert_true, fail
 from jsonpath_ng import Index, Fields
 from jsonpath_ng.ext import parse
 from .version import VERSION
@@ -56,11 +56,23 @@ class JSONLibraryKeywords(object):
             | ${json}=  |  Add Object To Json  | ${json}          | $..address         |  ${dict} |
             """
         json_path_expr = parse(json_path)
-        for match in json_path_expr.find(json_object):
-            if type(match.value) is dict:
-                match.value.update(object_to_add)
-            if type(match.value) is list:
-                match.value.append(object_to_add)
+        rv=json_path_expr.find(json_object)
+        if len(rv):
+            for match in rv:
+                if type(match.value) is dict:
+                    match.value.update(object_to_add)
+                if type(match.value) is list:
+                    match.value.append(object_to_add)
+        else:
+            parent_json_path='.'.join(json_path.split('.')[:-1])
+            child_name=json_path.split('.')[-1]
+            json_path_expr = parse(parent_json_path)
+            rv=json_path_expr.find(json_object)
+            if len(rv):
+                for match in rv:
+                    match.value.update({child_name:object_to_add})
+            else:
+                fail(f"no match found for parent {parent_json_path}")
 
         return json_object
 

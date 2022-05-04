@@ -18,6 +18,9 @@ TestAddJSONObjectByJSONPath
     ${json_obj}=    Add Object To Json     ${json_obj}    $..address    ${object_to_add}
     Dictionary Should Contain Sub Dictionary    ${json_obj['address']}    ${object_to_add}
 
+    ${json_obj}=    Add Object To Json     ${json_obj}    $.friends    ${None}
+    Dictionary Should Contain Key    ${json_obj}    friends
+
 TestGetValueByJSONPath
     [Documentation]  Get some json object using JSONPath
     ${values}=     Get Value From Json    ${json_obj}    $..address.postalCode

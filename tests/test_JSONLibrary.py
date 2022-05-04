@@ -16,19 +16,19 @@ class JSONLibraryTest(unittest.TestCase):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.json = self.test.load_json_from_file(os.path.join(dir_path, 'json', 'example.json'))
 
-    def test_add_object_to_json(self):
+    def test_add_dict_element_to_json(self):
         json_path = '$..address'
         data_to_add = {'latitude': '13.1234', 'longitude': '130.1234'}
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
         self.assertDictContainsSubset(data_to_add, json_object['address'])
 
     def test_add_new_object_to_root(self):
-        json_path = '$'
-        data_to_add = {'country': 'Thailand'}
+        json_path = '$.country'
+        data_to_add = 'Thailand'
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
         self.assertEqual(json_object['country'], 'Thailand')
 
-    def test_add_new_list_to_json(self):
+    def test_add_list_element_to_json(self):
         json_path = '$..favoriteColor'
         data_to_add = 'green'
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
