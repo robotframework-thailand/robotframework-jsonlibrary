@@ -4,6 +4,7 @@ import json
 import os.path
 from robot.api import logger
 from robot.api.deco import keyword
+from robot.utils.asserts import assert_true
 from jsonpath_ng import Index, Fields
 from jsonpath_ng.ext import parse
 from .version import VERSION
@@ -77,7 +78,11 @@ class JSONLibraryKeywords(object):
         | ${values}=  |  Get Value From Json  | ${json} |  $..phone_number |
         """
         json_path_expr = parse(json_path)
-        return [match.value for match in json_path_expr.find(json_object)]
+        rv=json_path_expr.find(json_object)
+        # make the keyword fails if nothing was return
+        assert_true(rv is not None and len(rv)!=0, 
+            f"Get Value From Json keyword failed to find a value for {json_path}")
+        return [match.value for match in rv]
 
     @keyword('Update Value To Json')
     def update_value_to_json(self, json_object, json_path, new_value):
