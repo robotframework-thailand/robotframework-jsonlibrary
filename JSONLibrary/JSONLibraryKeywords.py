@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import io
 import json
 import os.path
 from robot.api import logger
@@ -16,13 +17,14 @@ class JSONLibraryKeywords(object):
     ROBOT_EXIT_ON_FAILURE = True
 
     @keyword('Load JSON From File')
-    def load_json_from_file(self, file_name):
+    def load_json_from_file(self, file_name, encoding=None):
         """Load JSON from file.
 
         Return json as a dictionary object.
 
         Arguments:
             - file_name: absolute json file name
+            - encoding: encoding of the file
 
         Return json object (list or dictionary)
 
@@ -33,7 +35,7 @@ class JSONLibraryKeywords(object):
         if os.path.isfile(file_name) is False:
             logger.error("JSON file: " + file_name + " not found")
             raise IOError
-        with open(file_name) as json_file:
+        with io.open(file_name,mode='r',encoding=encoding) as json_file:
             data = json.load(json_file)
         return data
 
