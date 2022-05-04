@@ -23,6 +23,10 @@ TestGetValueByJSONPath
     ${values}=     Get Value From Json    ${json_obj}    $..address.postalCode
     Should Be Equal As Strings    ${values[0]}    630-0192
 
+TestErrorGetValueByJSONPath
+    [Documentation]  Check Get Value From JSON can fail if no match is found
+    Run Keyword And Expect Error    *failed to find*    Get Value From Json    ${json_obj}    $..errorField
+
 TestUpdateValueByJSONPath
     [Documentation]  Update value to json object using JSONPath
     ${json_obj}=    Update Value To Json    ${json_obj}    $..address.city    Bangkok
@@ -33,6 +37,13 @@ TestDeleteObjectByJSONPath
     [Documentation]  Delete object from json object using JSONPath
     ${json_obj}=    Delete Object From Json    ${json_obj}    $..isMarried
     Dictionary Should Not Contain Key    ${json_obj}    isMarried
+
+TestDeleteArrayElementsByJSONPath
+    [Documentation]  Delete array elements from json object using JSONPath
+    ${json_obj}=    Delete Object From Json    ${json_obj}    $..phoneNumbers[0]
+    Length Should Be    ${json_obj['phoneNumbers']}    2
+    ${json_obj}=    Delete Object From Json    ${json_obj}    $..phoneNumbers[*]
+    Length Should Be    ${json_obj['phoneNumbers']}    0
 
 TestConvertJSONToString
     [Documentation]  Convert JSON To String

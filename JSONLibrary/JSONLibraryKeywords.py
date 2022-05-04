@@ -121,7 +121,7 @@ class JSONLibraryKeywords(object):
         | ${json_object}=  |  Delete Object From Json | ${json} |  $..address.streetAddress  |
         """
         json_path_expr = parse(json_path)
-        for match in json_path_expr.find(json_object):
+        for match in reversed(json_path_expr.find(json_object)):
             path = match.path
             if isinstance(path, Index):
                 del(match.context.value[match.path.index])

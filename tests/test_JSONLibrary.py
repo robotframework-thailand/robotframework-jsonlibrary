@@ -37,14 +37,23 @@ class JSONLibraryTest(unittest.TestCase):
     def test_get_value_from_json_path(self):
         json_path = '$..number'
         values = self.test.get_value_from_json(self.json, json_path)
-        expected_result = ['0123-4567-8888', '0123-4567-8910']
+        expected_result = ['0123-4567-8888', '0123-4567-8910', '0123-4567-8999']
         self.assertListEqual(values, expected_result)
+
+    def test_get_none_from_json_path(self):
+        json_path = '$..occupation'
+        values = self.test.get_value_from_json(self.json, json_path)
+        self.assertIsNone(*values)
+
+    def test_get_empty_list_from_json_path(self):
+        json_path = '$..siblings'
+        values = self.test.get_value_from_json(self.json, json_path)
+        expected_result = []
+        self.assertListEqual(*values, expected_result)
 
     def test_get_value_from_json_path_not_found(self):
         json_path = '$..notfound'
-        values = self.test.get_value_from_json(self.json, json_path)
-        expected_result = []
-        self.assertListEqual(values, expected_result)
+        self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path)
 
     def test_update_value_to_json(self):
         json_path = '$..address.streetAddress'
@@ -62,6 +71,17 @@ class JSONLibraryTest(unittest.TestCase):
         json_path = '$..isMarried'
         json_object = self.test.delete_object_from_json(self.json, json_path)
         self.assertFalse('isMarried' in json_object)
+
+    def test_delete_array_elements_from_json(self):
+        json_path = '$..phoneNumbers[0]'
+        json_object = self.test.delete_object_from_json(self.json, json_path)
+        self.assertFalse(any(pn['type']=='iPhone' for pn in json_object['phoneNumbers']))
+
+    def test_delete_all_array_elements_from_json(self):
+        json_path = '$..phoneNumbers[*]'
+        json_object = self.test.delete_object_from_json(self.json, json_path)
+        expected_result = []
+        self.assertListEqual(expected_result, json_object['phoneNumbers'])
 
     def test_convert_json_to_string(self):
         json_str = self.test.convert_json_to_string(self.json)
@@ -82,3 +102,6 @@ class JSONLibraryTest(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+if __name__ == '__main__':
+    unittest.main()

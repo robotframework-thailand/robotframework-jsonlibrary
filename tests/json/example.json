@@ -12,11 +12,18 @@
 		"city": "Nara",
 		"postalCode": "630-0192"
 	},
-	"phoneNumbers": [{
-		"type": "iPhone",
-		"number": "0123-4567-8888"
-	}, {
-		"type": "home",
-		"number": "0123-4567-8910"
-	}]
+	"phoneNumbers": [
+		{
+			"type": "iPhone",
+			"number": "0123-4567-8888"
+		}, {
+			"type": "home",
+			"number": "0123-4567-8910"
+		}, {
+			"type": "car",
+			"number": "0123-4567-8999"
+		}
+	],
+	"siblings": [],
+	"occupation": null
 }
