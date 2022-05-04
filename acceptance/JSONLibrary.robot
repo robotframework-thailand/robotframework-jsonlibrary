@@ -2,6 +2,7 @@
 Library         JSONLibrary
 Library         Collections
 Library         String
+Library         OperatingSystem    
 Test Setup      SetUp Test
 Default Tags    JSONLibrary
 
@@ -38,3 +39,7 @@ TestConvertJSONToString
     ${json_str}=    Convert JSON To String    ${json_obj}
     Should Be String    ${json_str}
 
+TestDumpJSONToFile
+    [Documentation]    Dumps JSON to file
+    Dump JSON to file    ${TEMPDIR}/sample_dump.json    ${json_obj}
+    File Should Exist    ${TEMPDIR}/sample_dump.json
