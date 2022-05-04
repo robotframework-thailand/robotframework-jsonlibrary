@@ -43,6 +43,10 @@ For the detail keyword documentation. Go to this following link:
 
 https://robotframework-thailand.github.io/robotframework-jsonlibrary/
 
+For an example of JSONPath expressions. Go to this link:
+
+https://goessner.net/articles/JsonPath/index.html#e3
+
 #Help & Issues
 Mention me on Twitter [@nottyo](https://twitter.com/nottyo) 
 
