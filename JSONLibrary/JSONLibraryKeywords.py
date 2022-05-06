@@ -155,7 +155,7 @@ class JSONLibraryKeywords(object):
         """
         return json.dumps(json_object)
 
-    @keyword('Convert String to JSON')
+    @keyword('Convert String To JSON')
     def convert_string_to_json(self, json_string):
         """Convert String to JSON object
 
@@ -169,10 +169,60 @@ class JSONLibraryKeywords(object):
         """
         return json.loads(json_string)
 
-    @keyword('Dump JSON to file')
+    @keyword('Dump JSON To File')
     def dump_json_to_file(self, dest_file, json_object):
+        """Dump JSON to file
+
+        Arguments:
+            - dest_file: destination file
+            - json_object: json as a dictionary object.
+
+        Export the JSON object to a file
+
+        Examples:
+        |  Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
+        """
         json_str = self.convert_json_to_string(json_object)
         with open(dest_file, "w") as json_file:
             json_file.write(json_str)
         return str(dest_file)
+
+    @keyword('Should Have Value In Json')
+    def should_have_value_in_json(self, json_object, json_path):
+        """Should Have Value In JSON using JSONPath
+
+        Arguments:
+            - json_object: json as a dictionary object.
+            - json_path: jsonpath expression
+
+        Fail if no value is found
+
+        Examples:
+        |  Should Have Value In Json  | ${json} |  $..id_card_number |
+        """
+        try:
+            self.get_value_from_json(json_object, json_path)
+        except AssertionError:
+            fail(f"No value found for path {json_path}")
+
+
+    @keyword('Should Not Have Value In Json')
+    def should_not_have_value_in_json(self, json_object, json_path):
+        """Should Not Have Value In JSON using JSONPath
+
+        Arguments:
+            - json_object: json as a dictionary object.
+            - json_path: jsonpath expression
+
+        Fail if at least one value is found
+
+        Examples:
+        |  Should Not Have Value In Json  | ${json} |  $..id_card_number |
+        """
+        try:
+            rv=self.get_value_from_json(json_object, json_path)
+        except AssertionError:
+            pass
+        else:
+            fail(f"Match found for parent {json_path}: {rv}")
 

@@ -36,6 +36,18 @@ TestUpdateValueByJSONPath
     ${updated_city}=    Get Value From Json    ${json_obj}    $..address.city
     Should Be Equal As Strings    ${updated_city[0]}    Bangkok
 
+TestShouldHaveValueByJSONPath
+    [Documentation]  Check a value can be found in json object using JSONPath
+    Should Have Value In Json    ${json_obj}    $..isMarried
+
+    Run Keyword And Expect Error  *No value found*  Should Have Value In Json    ${json_obj}    $..hasSiblings
+
+TestShouldNotHaveValueByJSONPath
+    [Documentation]  Check a value cannot be found in json object using JSONPath
+    Should Not Have Value In Json    ${json_obj}    $..hasSiblings
+
+    Run Keyword And Expect Error  *Match found*  Should Not Have Value In Json    ${json_obj}    $..isMarried
+
 TestDeleteObjectByJSONPath
     [Documentation]  Delete object from json object using JSONPath
     ${json_obj}=    Delete Object From Json    ${json_obj}    $..isMarried

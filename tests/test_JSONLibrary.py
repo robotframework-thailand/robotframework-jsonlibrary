@@ -55,6 +55,22 @@ class JSONLibraryTest(unittest.TestCase):
         json_path = '$..notfound'
         self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path)
 
+    def test_has_value_from_json_path_passed(self):
+        json_path = '$..isMarried'
+        self.test.should_have_value_in_json(self.json, json_path)
+
+    def test_has_value_from_json_path_failed(self):
+        json_path = '$..hasSiblings'
+        self.assertRaises(AssertionError, self.test.should_have_value_in_json, self.json, json_path)
+
+    def test_has_no_value_from_json_path_passed(self):
+        json_path = '$..hasSiblings'
+        self.test.should_not_have_value_in_json(self.json, json_path)
+
+    def test_has_no_value_from_json_path_failed(self):
+        json_path = '$..isMarried'
+        self.assertRaises(AssertionError, self.test.should_not_have_value_in_json, self.json, json_path)
+
     def test_update_value_to_json(self):
         json_path = '$..address.streetAddress'
         value_to_update = 'Ratchadapisek Road'
