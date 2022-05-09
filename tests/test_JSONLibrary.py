@@ -16,19 +16,19 @@ class JSONLibraryTest(unittest.TestCase):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.json = self.test.load_json_from_file(os.path.join(dir_path, 'json', 'example.json'))
 
-    def test_add_object_to_json(self):
+    def test_add_dict_element_to_json(self):
         json_path = '$..address'
         data_to_add = {'latitude': '13.1234', 'longitude': '130.1234'}
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
         self.assertDictContainsSubset(data_to_add, json_object['address'])
 
     def test_add_new_object_to_root(self):
-        json_path = '$'
-        data_to_add = {'country': 'Thailand'}
+        json_path = '$.country'
+        data_to_add = 'Thailand'
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
         self.assertEqual(json_object['country'], 'Thailand')
 
-    def test_add_new_list_to_json(self):
+    def test_add_list_element_to_json(self):
         json_path = '$..favoriteColor'
         data_to_add = 'green'
         json_object = self.test.add_object_to_json(self.json, json_path, data_to_add)
@@ -37,14 +37,39 @@ class JSONLibraryTest(unittest.TestCase):
     def test_get_value_from_json_path(self):
         json_path = '$..number'
         values = self.test.get_value_from_json(self.json, json_path)
-        expected_result = ['0123-4567-8888', '0123-4567-8910']
+        expected_result = ['0123-4567-8888', '0123-4567-8910', '0123-4567-8999']
         self.assertListEqual(values, expected_result)
+
+    def test_get_none_from_json_path(self):
+        json_path = '$..occupation'
+        values = self.test.get_value_from_json(self.json, json_path)
+        self.assertIsNone(*values)
+
+    def test_get_empty_list_from_json_path(self):
+        json_path = '$..siblings'
+        values = self.test.get_value_from_json(self.json, json_path)
+        expected_result = []
+        self.assertListEqual(*values, expected_result)
 
     def test_get_value_from_json_path_not_found(self):
         json_path = '$..notfound'
-        values = self.test.get_value_from_json(self.json, json_path)
-        expected_result = []
-        self.assertListEqual(values, expected_result)
+        self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path)
+
+    def test_has_value_from_json_path_passed(self):
+        json_path = '$..isMarried'
+        self.test.should_have_value_in_json(self.json, json_path)
+
+    def test_has_value_from_json_path_failed(self):
+        json_path = '$..hasSiblings'
+        self.assertRaises(AssertionError, self.test.should_have_value_in_json, self.json, json_path)
+
+    def test_has_no_value_from_json_path_passed(self):
+        json_path = '$..hasSiblings'
+        self.test.should_not_have_value_in_json(self.json, json_path)
+
+    def test_has_no_value_from_json_path_failed(self):
+        json_path = '$..isMarried'
+        self.assertRaises(AssertionError, self.test.should_not_have_value_in_json, self.json, json_path)
 
     def test_update_value_to_json(self):
         json_path = '$..address.streetAddress'
@@ -63,6 +88,17 @@ class JSONLibraryTest(unittest.TestCase):
         json_object = self.test.delete_object_from_json(self.json, json_path)
         self.assertFalse('isMarried' in json_object)
 
+    def test_delete_array_elements_from_json(self):
+        json_path = '$..phoneNumbers[0]'
+        json_object = self.test.delete_object_from_json(self.json, json_path)
+        self.assertFalse(any(pn['type']=='iPhone' for pn in json_object['phoneNumbers']))
+
+    def test_delete_all_array_elements_from_json(self):
+        json_path = '$..phoneNumbers[*]'
+        json_object = self.test.delete_object_from_json(self.json, json_path)
+        expected_result = []
+        self.assertListEqual(expected_result, json_object['phoneNumbers'])
+
     def test_convert_json_to_string(self):
         json_str = self.test.convert_json_to_string(self.json)
         self.assertTrue(isinstance(json_str, str))
@@ -71,5 +107,17 @@ class JSONLibraryTest(unittest.TestCase):
         json_obj = self.test.convert_string_to_json('{"firstName": "John"}')
         self.assertTrue("firstName" in json_obj)
 
+    def test_dump_json_to_file(self):
+        if os.name == 'nt':
+            tmp_path = os.getenv('TMP', 'c:\\Temp\\')
+        else:
+            tmp_path = os.getenv('TMP', '/tmp/')
+        file_path = '%ssample.json' % (tmp_path)
+        json_file = self.test.dump_json_to_file(file_path, self.json)
+        self.assertTrue(os.path.exists(json_file))
+
     def tearDown(self):
         pass
+
+if __name__ == '__main__':
+    unittest.main()

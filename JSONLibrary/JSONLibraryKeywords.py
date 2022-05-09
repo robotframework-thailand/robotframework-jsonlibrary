@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import io
 import json
 import os.path
 from robot.api import logger
 from robot.api.deco import keyword
-from jsonpath_rw import Index, Fields
-from jsonpath_rw_ext import parse
+from robot.utils.asserts import assert_true, fail
+from jsonpath_ng import Index, Fields
+from jsonpath_ng.ext import parse
 from .version import VERSION
 
 __author__ = 'Traitanit Huangsri'
@@ -16,13 +18,14 @@ class JSONLibraryKeywords(object):
     ROBOT_EXIT_ON_FAILURE = True
 
     @keyword('Load JSON From File')
-    def load_json_from_file(self, file_name):
+    def load_json_from_file(self, file_name, encoding=None):
         """Load JSON from file.
 
         Return json as a dictionary object.
 
         Arguments:
             - file_name: absolute json file name
+            - encoding: encoding of the file
 
         Return json object (list or dictionary)
 
@@ -33,7 +36,7 @@ class JSONLibraryKeywords(object):
         if os.path.isfile(file_name) is False:
             logger.error("JSON file: " + file_name + " not found")
             raise IOError
-        with open(file_name) as json_file:
+        with io.open(file_name,mode='r',encoding=encoding) as json_file:
             data = json.load(json_file)
         return data
 
@@ -53,11 +56,23 @@ class JSONLibraryKeywords(object):
             | ${json}=  |  Add Object To Json  | ${json}          | $..address         |  ${dict} |
             """
         json_path_expr = parse(json_path)
-        for match in json_path_expr.find(json_object):
-            if type(match.value) is dict:
-                match.value.update(object_to_add)
-            if type(match.value) is list:
-                match.value.append(object_to_add)
+        rv=json_path_expr.find(json_object)
+        if len(rv):
+            for match in rv:
+                if type(match.value) is dict:
+                    match.value.update(object_to_add)
+                if type(match.value) is list:
+                    match.value.append(object_to_add)
+        else:
+            parent_json_path='.'.join(json_path.split('.')[:-1])
+            child_name=json_path.split('.')[-1]
+            json_path_expr = parse(parent_json_path)
+            rv=json_path_expr.find(json_object)
+            if len(rv):
+                for match in rv:
+                    match.value.update({child_name:object_to_add})
+            else:
+                fail(f"no match found for parent {parent_json_path}")
 
         return json_object
 
@@ -75,7 +90,11 @@ class JSONLibraryKeywords(object):
         | ${values}=  |  Get Value From Json  | ${json} |  $..phone_number |
         """
         json_path_expr = parse(json_path)
-        return [match.value for match in json_path_expr.find(json_object)]
+        rv=json_path_expr.find(json_object)
+        # make the keyword fails if nothing was return
+        assert_true(rv is not None and len(rv)!=0, 
+            f"Get Value From Json keyword failed to find a value for {json_path}")
+        return [match.value for match in rv]
 
     @keyword('Update Value To Json')
     def update_value_to_json(self, json_object, json_path, new_value):
@@ -114,7 +133,7 @@ class JSONLibraryKeywords(object):
         | ${json_object}=  |  Delete Object From Json | ${json} |  $..address.streetAddress  |
         """
         json_path_expr = parse(json_path)
-        for match in json_path_expr.find(json_object):
+        for match in reversed(json_path_expr.find(json_object)):
             path = match.path
             if isinstance(path, Index):
                 del(match.context.value[match.path.index])
@@ -136,7 +155,7 @@ class JSONLibraryKeywords(object):
         """
         return json.dumps(json_object)
 
-    @keyword('Convert String to JSON')
+    @keyword('Convert String To JSON')
     def convert_string_to_json(self, json_string):
         """Convert String to JSON object
 
@@ -149,4 +168,61 @@ class JSONLibraryKeywords(object):
         | ${json_object}=  |  Convert String to JSON | ${json_string} |
         """
         return json.loads(json_string)
+
+    @keyword('Dump JSON To File')
+    def dump_json_to_file(self, dest_file, json_object):
+        """Dump JSON to file
+
+        Arguments:
+            - dest_file: destination file
+            - json_object: json as a dictionary object.
+
+        Export the JSON object to a file
+
+        Examples:
+        |  Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
+        """
+        json_str = self.convert_json_to_string(json_object)
+        with open(dest_file, "w") as json_file:
+            json_file.write(json_str)
+        return str(dest_file)
+
+    @keyword('Should Have Value In Json')
+    def should_have_value_in_json(self, json_object, json_path):
+        """Should Have Value In JSON using JSONPath
+
+        Arguments:
+            - json_object: json as a dictionary object.
+            - json_path: jsonpath expression
+
+        Fail if no value is found
+
+        Examples:
+        |  Should Have Value In Json  | ${json} |  $..id_card_number |
+        """
+        try:
+            self.get_value_from_json(json_object, json_path)
+        except AssertionError:
+            fail(f"No value found for path {json_path}")
+
+
+    @keyword('Should Not Have Value In Json')
+    def should_not_have_value_in_json(self, json_object, json_path):
+        """Should Not Have Value In JSON using JSONPath
+
+        Arguments:
+            - json_object: json as a dictionary object.
+            - json_path: jsonpath expression
+
+        Fail if at least one value is found
+
+        Examples:
+        |  Should Not Have Value In Json  | ${json} |  $..id_card_number |
+        """
+        try:
+            rv=self.get_value_from_json(json_object, json_path)
+        except AssertionError:
+            pass
+        else:
+            fail(f"Match found for parent {json_path}: {rv}")
 

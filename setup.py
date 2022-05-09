@@ -14,11 +14,10 @@ else:
     VERSION='0.1' #
 
 requirements = [
-    'tox==3.0.0',
+    'tox>=3.0.0',
     'coverage',
     'robotframework>=3.0',
-    'jsonpath-rw==1.4.0',
-    'jsonpath-rw-ext>=0.1.9'
+    'jsonpath-ng>=1.4.3'
 ]
 
 test_requirements = [

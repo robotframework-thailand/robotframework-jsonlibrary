@@ -37,11 +37,19 @@ ${value}=         | Get Value From Json | ${json_obj}      | $..country |       
 |${value_to_update}=| Set Variable     | Japan             |            |                  |
 |${json_obj}=     | Update Value To Json | ${json_obj}     | $..country | ${value_to_update}|
 |Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
+|Should Have Value In Json  | ${json_obj} |  $..isMarried |
+|Should Not Have Value In Json  | ${json_obj} |  $..hasSiblings |
+|Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
+
 
 # Documentation
 For the detail keyword documentation. Go to this following link:
 
 https://robotframework-thailand.github.io/robotframework-jsonlibrary/
+
+For an example of JSONPath expressions. Go to this link:
+
+https://goessner.net/articles/JsonPath/index.html#e3
 
 #Help & Issues
 Mention me on Twitter [@nottyo](https://twitter.com/nottyo) 

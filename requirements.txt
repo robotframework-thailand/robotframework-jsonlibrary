@@ -1,4 +1,3 @@
 robotframework>=3.0
-jsonpath-rw==1.4.0
-jsonpath-rw-ext>=0.1.9
+jsonpath-ng>=1.4.3
 coverage==4.2
