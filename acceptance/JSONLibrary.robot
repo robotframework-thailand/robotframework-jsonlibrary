@@ -48,6 +48,14 @@ TestShouldNotHaveValueByJSONPath
 
     Run Keyword And Expect Error  *Match found*  Should Not Have Value In Json    ${json_obj}    $..isMarried
 
+TestInvalidSyntaxByJSONPath
+    [Documentation]  Check that an invalid syntax fail the test and doesn't crash Robot
+    ${value}=    Get Value From Json    ${json_obj}    $.bankAccounts[?(@.amount>=100)].bank
+    Should Be Equal As Strings  "${value}"  "['WesternUnion', 'HSBC']"
+
+    ${res}=  Run Keyword And return status   Get Value From Json    ${json_obj}    $.bankAccounts[?(@.amount=>100)].bank
+    Should Not Be True  ${res} 
+
 TestDeleteObjectByJSONPath
     [Documentation]  Delete object from json object using JSONPath
     ${json_obj}=    Delete Object From Json    ${json_obj}    $..isMarried

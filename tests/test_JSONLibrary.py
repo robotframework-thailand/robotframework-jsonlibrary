@@ -99,6 +99,15 @@ class JSONLibraryTest(unittest.TestCase):
         expected_result = []
         self.assertListEqual(expected_result, json_object['phoneNumbers'])
 
+    def test_invalid_syntax_doesnt_crash(self):
+        json_path = '$.bankAccounts[?(@.amount>=100)].bank'
+        values = self.test.get_value_from_json(self.json, json_path)
+        expected_result = ['WesternUnion', 'HSBC']
+        self.assertListEqual(values, expected_result)
+        
+        json_path = "$.bankAccounts[?(@.amount=>100)].bank"
+        self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path)
+
     def test_convert_json_to_string(self):
         json_str = self.test.convert_json_to_string(self.json)
         self.assertTrue(isinstance(json_str, str))
