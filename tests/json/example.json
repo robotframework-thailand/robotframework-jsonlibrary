@@ -24,6 +24,18 @@
 			"number": "0123-4567-8999"
 		}
 	],
+	"bankAccounts": [
+		{
+			"bank": "WesternUnion",
+			"amount": "503"
+		}, {
+			"bank": "HSBC",
+			"amount": "1320"
+		}, {
+			"bank": "GoldenSack",
+			"amount": "-10"
+		}
+	],
 	"siblings": [],
 	"occupation": null
 }
