@@ -185,6 +185,7 @@ class JSONLibraryKeywords(object):
         Arguments:
             - dest_file: destination file
             - json_object: json as a dictionary object.
+            - encoding: encoding of the file
 
         Export the JSON object to a file
 
