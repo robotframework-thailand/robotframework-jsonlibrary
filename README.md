@@ -18,11 +18,19 @@ JSONPath is an expression which can help to access to your JSON document. The JS
 
 This library can help you to add, get, update and delete your JSON object. So it's very useful in case that you have a very large JSON object.
 
+# Notes
+
+Please note this library is a bridge between the Robot Framework and the parser jsonpath-ng. Hence, issues related to parsing should be raised on https://github.com/h2non/jsonpath-ng
+
+Starting with version 0.4, Python2 support is dropped as Python2 reached end of life on 1st of January 2020.
+
 # Usage
+
 Install robotframework-jsonlibrary via ``pip`` command
 ```bash
 pip install -U robotframework-jsonlibrary
 ```
+
 # Example Test Case
 
 *** Settings ***  |                     |                  |            |                  |
@@ -50,6 +58,14 @@ https://robotframework-thailand.github.io/robotframework-jsonlibrary/
 For an example of JSONPath expressions. Go to this link:
 
 https://goessner.net/articles/JsonPath/index.html#e3
+
+Parser: jsonpath-ng:
+
+https://github.com/h2non/jsonpath-ng
+
+This github:
+
+https://github.com/robotframework-thailand/robotframework-jsonlibrary
 
 #Help & Issues
 Mention me on Twitter [@nottyo](https://twitter.com/nottyo) 
