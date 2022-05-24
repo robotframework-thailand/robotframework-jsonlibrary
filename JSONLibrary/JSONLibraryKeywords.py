@@ -179,13 +179,12 @@ class JSONLibraryKeywords(object):
         return json.loads(json_string)
 
     @keyword("Dump JSON To File")
-    def dump_json_to_file(self, dest_file, json_object, encoding=None):
+    def dump_json_to_file(self, dest_file, json_object):
         """Dump JSON to file
 
         Arguments:
             - dest_file: destination file
             - json_object: json as a dictionary object.
-            - encoding: encoding of the file
 
         Export the JSON object to a file
 
@@ -193,7 +192,7 @@ class JSONLibraryKeywords(object):
         |  Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
         """
         json_str = self.convert_json_to_string(json_object)
-        with open(dest_file, "w",encoding=encoding) as json_file:
+        with open(dest_file, "w") as json_file:
             json_file.write(json_str)
         return str(dest_file)
 
