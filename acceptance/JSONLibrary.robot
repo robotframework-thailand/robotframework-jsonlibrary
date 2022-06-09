@@ -26,9 +26,13 @@ TestGetValueByJSONPath
     ${values}=     Get Value From Json    ${json_obj}    $..address.postalCode
     Should Be Equal As Strings    ${values[0]}    630-0192
 
+    ${values}=     Get Value From Json    ${json_obj}    $..errorField
+    ${size}=  Get Length  ${values}
+    Should Be Equal As Integers    ${size}    0
+
 TestErrorGetValueByJSONPath
     [Documentation]  Check Get Value From JSON can fail if no match is found
-    Run Keyword And Expect Error    *failed to find*    Get Value From Json    ${json_obj}    $..errorField
+    Run Keyword And Expect Error    *failed to find*    Get Value From Json    ${json_obj}    $..errorField  fail_on_empty=${True}
 
 TestUpdateValueByJSONPath
     [Documentation]  Update value to json object using JSONPath
