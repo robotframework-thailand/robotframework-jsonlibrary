@@ -86,23 +86,25 @@ class JSONLibraryKeywords(object):
         return json_object
 
     @keyword("Get Value From Json")
-    def get_value_from_json(self, json_object, json_path):
+    def get_value_from_json(self, json_object, json_path, fail_on_empty=False):
         """Get Value From JSON using JSONPath
 
         Arguments:
             - json_object: json as a dictionary object.
             - json_path: jsonpath expression
+            - fail_on_empty: fail the testcases if nothing is returned
 
         Return array of values
 
         Examples:
         | ${values}=  |  Get Value From Json  | ${json} |  $..phone_number |
+        | ${values}=  |  Get Value From Json  | ${json} |  $..missing | fail_on_empty=${True} |
         """
         json_path_expr = parse(json_path)
         rv=json_path_expr.find(json_object)
-        # make the keyword fails if nothing was return
-        assert_true(rv is not None and len(rv)!=0, 
-            f"Get Value From Json keyword failed to find a value for {json_path}")
+        # optional: make the keyword fails if nothing was return
+        if fail_on_empty is True and (rv is None or len(rv)==0):
+            fail(f"Get Value From Json keyword failed to find a value for {json_path}")
         return [match.value for match in rv]
 
     @keyword("Update Value To Json")
@@ -210,7 +212,7 @@ class JSONLibraryKeywords(object):
         |  Should Have Value In Json  | ${json} |  $..id_card_number |
         """
         try:
-            self.get_value_from_json(json_object, json_path)
+            self.get_value_from_json(json_object, json_path, fail_on_empty=True)
         except AssertionError:
             fail(f"No value found for path {json_path}")
 
@@ -229,7 +231,7 @@ class JSONLibraryKeywords(object):
         |  Should Not Have Value In Json  | ${json} |  $..id_card_number |
         """
         try:
-            rv=self.get_value_from_json(json_object, json_path)
+            rv=self.get_value_from_json(json_object, json_path, fail_on_empty=True)
         except AssertionError:
             pass
         else:

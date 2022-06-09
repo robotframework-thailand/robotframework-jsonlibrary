@@ -53,7 +53,12 @@ class JSONLibraryTest(unittest.TestCase):
 
     def test_get_value_from_json_path_not_found(self):
         json_path = '$..notfound'
-        self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path)
+        self.assertRaises(AssertionError, self.test.get_value_from_json, self.json, json_path, fail_on_empty=True)
+
+        # backward-compatilibity, fail_on_empty is False by default
+        values = self.test.get_value_from_json(self.json, json_path)
+        expected_result = []
+        self.assertListEqual(values, expected_result)
 
     def test_has_value_from_json_path_passed(self):
         json_path = '$..isMarried'
