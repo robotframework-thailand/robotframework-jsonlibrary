@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from .JSONLibraryKeywords import JSONLibraryKeywords
-from .version import VERSION
+from .__version__ import __version__
 
 __author__ = 'Traitanit Huangsri'
 __email__ = 'traitanit.hua@gmail.com'
-__version__ = VERSION
 
 
 class JSONLibrary(JSONLibraryKeywords):
