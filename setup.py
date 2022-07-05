@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re
+import os
 from setuptools import setup
 
-# Read version from file without loading the module
-with open('JSONLibrary/version.py', 'r') as version_file:
-    version_match = re.search(r"^VERSION ?= ?['\"]([^'\"]*)['\"]",
-                              version_file.read(), re.M)
-if version_match:
-    VERSION=version_match.group(1)
-else:
-    VERSION='0.1' #
+HERE = os.path.abspath(os.path.dirname(__file__))
+version = {}
+with open(os.path.join(HERE, "JSONLibrary", "__version__.py"), encoding="utf8") as f:
+    exec(f.read(), version)
 
 requirements = [
-#    'tox>=3.0.0',
-    'coverage>=4.2',
     'robotframework>=3.0',
     'jsonpath-ng>=1.4.3'
 ]
@@ -35,7 +29,7 @@ Topic :: Software Development :: Testing
 
 setup(
     name='robotframework-jsonlibrary',
-    version=VERSION,
+    version=version["__version__"],
     description="robotframework-jsonlibrary is a Robot Framework test library for manipulating JSON Object. You can manipulate your JSON object using JSONPath",
     author="Traitanit Huangsri",
     author_email='traitanit.hua@gmail.com',

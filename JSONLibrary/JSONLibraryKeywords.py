@@ -4,15 +4,13 @@ import json
 import os.path
 from robot.api import logger
 from robot.api.deco import keyword
-from robot.utils.asserts import assert_true, fail
+from robot.utils.asserts import fail
 from jsonpath_ng import Index, Fields
 from jsonpath_ng.ext import parse as parse_ng
 from jsonpath_ng.exceptions import JsonPathParserError
-from .version import VERSION
 
 __author__ = 'Traitanit Huangsri'
 __email__ = 'traitanit.hua@gmail.com'
-__version__ = VERSION
 
 def parse(json_path):
     try:
