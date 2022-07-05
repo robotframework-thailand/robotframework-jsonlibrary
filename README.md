@@ -47,7 +47,7 @@ ${value}=         | Get Value From Json | ${json_obj}      | $..country |       
 |Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
 |Should Have Value In Json  | ${json_obj} |  $..isMarried |
 |Should Not Have Value In Json  | ${json_obj} |  $..hasSiblings |
-|Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
+|Dump JSON To File  | ${OUTPUT_DIR}${/}output.json | ${json} |
 
 
 # Documentation
