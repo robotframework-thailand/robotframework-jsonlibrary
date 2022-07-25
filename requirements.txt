@@ -1,4 +1,0 @@
-setuptools>=62.0.0
-robotframework>=3.0
-jsonpath-ng>=1.4.3
-coverage>=4.2

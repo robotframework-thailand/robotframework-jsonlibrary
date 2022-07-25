@@ -1,0 +1,8 @@
+[run]
+include = JSONLibrary/*
+
+[xml]
+output = tests/__out__/coverage/xml/coverage.xml
+
+[html]
+directory = tests/__out__/coverage/html
