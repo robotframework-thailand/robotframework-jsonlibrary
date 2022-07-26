@@ -2,7 +2,11 @@ language: python
 python:
   - "3.8"
 install: "pip install -r requirements-dev.txt"
-script: invoke test build docs
+script:
+  - invoke style-check
+  - invoke lint
+  - invoke test
+  - invoke docs
 deploy:
   provider: pypi
   user: nottyo
@@ -12,4 +16,3 @@ deploy:
     tags: true
     distributions: dist
     repo: robotframework-thailand/robotframework-jsonlibrary
-

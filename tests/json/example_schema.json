@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "favoriteColor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isMarried": {
+      "type": "boolean"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+          "streetAddress": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        }
+    },
+    "phoneNumbers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "bankAccounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bank": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "siblings": {
+      "type": "array"
+    },
+    "occupation": {
+      "type": "null"
+    }
+  },
+  "required":["firstName", "lastName", "age", "gender", "favoriteColor", "isMarried", "address", "phoneNumbers", "bankAccounts"]
+}

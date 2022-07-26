@@ -50,7 +50,6 @@ def install(ctx):
 @task(install)
 def test(ctx):
     ctx.run("tox -p")
-    ctx.run("robot -d tests/__out__/robot acceptance")
 
 
 @task

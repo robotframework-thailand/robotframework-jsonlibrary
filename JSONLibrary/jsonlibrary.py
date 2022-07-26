@@ -2,6 +2,7 @@
 import io
 import json
 import os.path
+import jsonschema
 from copy import deepcopy
 from robot.api import logger
 from robot.utils.asserts import fail
@@ -238,7 +239,7 @@ class JSONLibrary:
         Export the JSON object to a file
 
         Examples:
-        |  Dump JSON To File  | ${OUTPUTID)${/}output.json | ${json} |
+        |  Dump JSON To File  | ${OUTPUT_DIR)${/}output.json | ${json} |
         """
         json_str = self.convert_json_to_string(json_object)
         with open(dest_file, "w", encoding=encoding) as json_file:
@@ -280,3 +281,38 @@ class JSONLibrary:
             pass
         else:
             fail(f"Match found for parent {json_path}: {rv}")
+
+    def validate_json_by_schema_file(
+        self, json_object, path_to_schema, encoding=None
+    ) -> None:
+        """Validate json object by json schema file.
+        Arguments:
+            - json_object: json as a dictionary object.
+            - json_path: path to file with json schema
+
+        Fail if json object does not match the schema
+
+        Examples:
+        | Simple | Validate Json By Schema File  |  {"foo":bar}  |  ${CURDIR}${/}schema.json |
+        """
+        with open(path_to_schema, encoding=encoding) as f:
+            self.validate_json_by_schema(json_object, json.load(f))
+
+    @staticmethod
+    def validate_json_by_schema(json_object, schema) -> None:
+        """Validate json object by json schema.
+        Arguments:
+            - json_object: json as a dictionary object.
+            - schema: schema as a dictionary object.
+
+        Fail if json object does not match the schema
+
+        Examples:
+        | Simple | Validate Json By Schema  |  {"foo":bar}  |  {"$schema": "https://schema", "type": "object"} |
+        """
+        try:
+            jsonschema.validate(json_object, schema)
+        except jsonschema.ValidationError as e:
+            fail(f"Json does not match the schema: {e.schema}")
+        except jsonschema.SchemaError as e:
+            fail(f"Json schema error: {e}")

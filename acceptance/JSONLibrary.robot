@@ -87,3 +87,36 @@ TestDumpJSONToFile
     [Documentation]    Dumps JSON to file
     Dump JSON to file    ${TEMPDIR}/sample_dump.json    ${json_obj_input}
     File Should Exist    ${TEMPDIR}/sample_dump.json
+
+TestValidateJsonBySchemaFile
+    [Documentation]    Validate JSON by schema file
+    Validate Json By Schema File    ${json_obj_input}   ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
+
+TestValidateJsonBySchema
+    [Documentation]    Validate JSON by schema
+    ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
+    Validate Json By Schema    ${json_obj_input}   ${schema}
+
+TestValidateJsonBySchemaFileFail
+    [Documentation]    Validate JSON by schema file and fail
+    ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
+    Run Keyword And Expect Error    Json does not match the schema: *
+    ...     Validate Json By Schema File    ${new_json}   ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
+
+TestValidateJsonBySchemaFail
+    [Documentation]    Validate JSON by schema and fail
+    ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
+    ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
+    Run Keyword And Expect Error    Json does not match the schema: *
+    ...     Validate Json By Schema    ${new_json}   ${schema}
+
+TestValidateJsonByInvalidSchemaFile
+    [Documentation]    Validate JSON by invalid schema file
+    Run Keyword And Expect Error    Json schema error: *
+    ...     Validate Json By Schema File    ${json_obj_input}   ${CURDIR}${/}..${/}tests${/}json${/}broken_schema.json
+
+TestValidateJsonByInvalidSchema
+    [Documentation]    Validate JSON by invalid schema
+    ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}broken_schema.json
+    Run Keyword And Expect Error    Json schema error: *
+    ...     Validate Json By Schema    ${json_obj_input}   ${schema}
