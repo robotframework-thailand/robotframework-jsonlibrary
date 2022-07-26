@@ -5,7 +5,7 @@ matrix:
       env: TOXENV=py38
     - python: 3.9
       env: TOXENV=py39
-    - python: 3.10
+    - python: 3.10-dev
       env: TOXENV=py310
 install: "pip install -r requirements-dev.txt"
 script:
