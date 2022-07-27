@@ -33,22 +33,24 @@ pip install -U robotframework-jsonlibrary
 
 # Example Test Case
 
-*** Settings ***  |                     |                  |            |                  |
+|__\*** Settings \***__ |                     |                  |            |                  |
 ----------------- |-------------------- |----------------- |----------- |----------------- |
-Library           | JSONLibrary         |                  |            |                  |
-*** Test Cases ***|                     |                  |            |                  |
-${json_obj}=      | Load JSON From File | example.json     |            |                  |
-${object_to_add}= | Create Dictionary   | country=Thailand |            |                  |
-${json_obj}=      | Add Object To Json  | ${json_obj}      | $..address | ${object_to_add} |
-${value}=         | Get Value From Json | ${json_obj}      | $..country |                  |
+|Library           | JSONLibrary         |                  |            |                  |
+|__\*** Test Cases \***__|                     |                  |            |                  |
+|${json_obj}=      | Load Json From File | example.json     |            |                  |
+|${object_to_add}= | Create Dictionary   | country=Thailand |            |                  |
+|${json_obj}=      | Add Object To Json  | ${json_obj}      | $..address | ${object_to_add} |
+|${value}=         | Get Value From Json | ${json_obj}      | $..country |                  |
 |Should Be Equal As Strings | ${value[0]} | Thailand       |            |                  |
 |${value_to_update}=| Set Variable     | Japan             |            |                  |
 |${json_obj}=     | Update Value To Json | ${json_obj}     | $..country | ${value_to_update}|
 |Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
 |Should Have Value In Json  | ${json_obj} |  $..isMarried |
 |Should Not Have Value In Json  | ${json_obj} |  $..hasSiblings |
-|Dump JSON To File  | ${OUTPUT_DIR}${/}output.json | ${json} |
-
+|Dump Json To File  | ${OUTPUT_DIR}${/}output.json | ${json} |
+|${schema_json_obj}=      | Load Json From File | ${CURDIR}${/}schema.json     |            |                  |
+|Validate Json By Schema      | ${json_obj} | ${schema_json_obj} |         |           |
+|Validate Json By Schema File | ${json_obj} | ${CURDIR}${/}schema.json |         |           |
 
 # Documentation
 For the detail keyword documentation. Go to this following link:

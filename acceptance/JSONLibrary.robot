@@ -8,7 +8,7 @@ Default Tags    JSONLibrary
 
 *** Keywords ***
 SetUp Test
-    ${json}=    Load JSON From File    ${CURDIR}${/}..${/}tests${/}json${/}example.json
+    ${json}=    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example.json
     Set Test Variable    ${json_obj_input}    ${json}
     Set Test Variable    ${json_obj_orignal}    ${json}
 
@@ -33,7 +33,7 @@ TestGetValueByJSONPath
     Should Be Equal As Integers    ${size}    0
 
 TestErrorGetValueByJSONPath
-    [Documentation]  Check Get Value From JSON can fail if no match is found
+    [Documentation]  Check Get Value From Json can fail if no match is found
     Run Keyword And Expect Error    *failed to find*    Get Value From Json    ${json_obj_input}    $..errorField  fail_on_empty=${True}
 
 TestUpdateValueByJSONPath
@@ -79,44 +79,44 @@ TestDeleteArrayElementsByJSONPath
     Dictionaries Should Be Equal    ${json_obj_orignal}      ${json_obj_input}
 
 TestConvertJSONToString
-    [Documentation]  Convert JSON To String
-    ${json_str}=    Convert JSON To String    ${json_obj_input}
+    [Documentation]  Convert Json To String
+    ${json_str}=    Convert Json To String    ${json_obj_input}
     Should Be String    ${json_str}
 
 TestDumpJSONToFile
-    [Documentation]    Dumps JSON to file
-    Dump JSON to file    ${TEMPDIR}/sample_dump.json    ${json_obj_input}
+    [Documentation]    Dumps Json to file
+    Dump Json to file    ${TEMPDIR}/sample_dump.json    ${json_obj_input}
     File Should Exist    ${TEMPDIR}/sample_dump.json
 
 TestValidateJsonBySchemaFile
-    [Documentation]    Validate JSON by schema file
+    [Documentation]    Validate Json by schema file
     Validate Json By Schema File    ${json_obj_input}   ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
 
 TestValidateJsonBySchema
-    [Documentation]    Validate JSON by schema
+    [Documentation]    Validate Json by schema
     ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
     Validate Json By Schema    ${json_obj_input}   ${schema}
 
 TestValidateJsonBySchemaFileFail
-    [Documentation]    Validate JSON by schema file and fail
+    [Documentation]    Validate Json by schema file and fail
     ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
     Run Keyword And Expect Error    Json does not match the schema: *
     ...     Validate Json By Schema File    ${new_json}   ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
 
 TestValidateJsonBySchemaFail
-    [Documentation]    Validate JSON by schema and fail
+    [Documentation]    Validate Json by schema and fail
     ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
     ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
     Run Keyword And Expect Error    Json does not match the schema: *
     ...     Validate Json By Schema    ${new_json}   ${schema}
 
 TestValidateJsonByInvalidSchemaFile
-    [Documentation]    Validate JSON by invalid schema file
+    [Documentation]    Validate Json by invalid schema file
     Run Keyword And Expect Error    Json schema error: *
     ...     Validate Json By Schema File    ${json_obj_input}   ${CURDIR}${/}..${/}tests${/}json${/}broken_schema.json
 
 TestValidateJsonByInvalidSchema
-    [Documentation]    Validate JSON by invalid schema
+    [Documentation]    Validate Json by invalid schema
     ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}broken_schema.json
     Run Keyword And Expect Error    Json schema error: *
     ...     Validate Json By Schema    ${json_obj_input}   ${schema}
