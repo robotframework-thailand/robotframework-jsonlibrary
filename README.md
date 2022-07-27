@@ -34,7 +34,7 @@ pip install -U robotframework-jsonlibrary
 # Example Test Case
 
 |\*** Settings \***|                     |                  |            |                  |
------------------ |-------------------- |----------------- |----------- |----------------- |
+|:----------------- |-------------------- |----------------- |----------- |----------------- |
 |Library           | JSONLibrary         |                  |            |                  |
 |__\*** Test Cases \***__|                     |                  |            |                  |
 |${json_obj}=      | Load Json From File | example.json     |            |                  |
