@@ -33,7 +33,7 @@ pip install -U robotframework-jsonlibrary
 
 # Example Test Case
 
-|__\*** Settings \***__ |                     |                  |            |                  |
+|\*** Settings \***|                     |                  |            |                  |
 ----------------- |-------------------- |----------------- |----------- |----------------- |
 |Library           | JSONLibrary         |                  |            |                  |
 |__\*** Test Cases \***__|                     |                  |            |                  |
@@ -47,10 +47,10 @@ pip install -U robotframework-jsonlibrary
 |Should Be Equal As Strings | ${json_obj['country'] | ${value_to_update} |   |             |
 |Should Have Value In Json  | ${json_obj} |  $..isMarried |
 |Should Not Have Value In Json  | ${json_obj} |  $..hasSiblings |
-|Dump Json To File  | ${OUTPUT_DIR}${/}output.json | ${json} |
-|${schema_json_obj}=      | Load Json From File | ${CURDIR}${/}schema.json     |            |                  |
+|Dump Json To File  | \${OUTPUT_DIR}\${/}output.json | ${json} |
+|${schema_json_obj}=      | Load Json From File | schema.json     |            |                  |
 |Validate Json By Schema      | ${json_obj} | ${schema_json_obj} |         |           |
-|Validate Json By Schema File | ${json_obj} | ${CURDIR}${/}schema.json |         |           |
+|Validate Json By Schema File | ${json_obj} | schema.json |         |           |
 
 # Documentation
 For the detail keyword documentation. Go to this following link:
