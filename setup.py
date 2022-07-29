@@ -6,7 +6,9 @@ version = {}
 with open(os.path.join(HERE, "JSONLibrary", "__version__.py"), encoding="utf8") as f:
     exec(f.read(), version)
 
-requirements = ["robotframework>=3.0", "jsonpath-ng>=1.4.3", "jsonschema>=2.5.1"]
+requirements = [
+    i.strip() for i in open("requirements.txt", encoding="utf8").readlines()
+]
 
 setup(
     name="robotframework-jsonlibrary",
@@ -20,6 +22,7 @@ setup(
     packages=["JSONLibrary"],
     package_dir={"robotframework-jsonlibrary": "JSONLibrary"},
     install_requires=requirements,
+    include_package_data=True,
     keywords="testing robotframework json jsonschema jsonpath",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
