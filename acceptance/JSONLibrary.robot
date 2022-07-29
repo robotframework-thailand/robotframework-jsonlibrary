@@ -59,9 +59,8 @@ TestInvalidSyntaxByJSONPath
     [Documentation]  Check that an invalid syntax fail the test and doesn't crash Robot
     ${value}=    Get Value From Json    ${json_obj_input}    $.bankAccounts[?(@.amount>=100)].bank
     Should Be Equal As Strings  "${value}"  "['WesternUnion', 'HSBC']"
-
-    ${res}=  Run Keyword And return status   Get Value From Json    ${json_obj}    $.bankAccounts[?(@.amount=>100)].bank
-    Should Not Be True  ${res} 
+    Run Keyword And Expect Error   Parser failed to understand syntax *
+    ...     Get Value From Json    ${json_obj_input}    $.bankAccounts[?(@.amount=>100)].bank
 
 TestDeleteObjectByJSONPath
     [Documentation]  Delete object from json object using JSONPath
