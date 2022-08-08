@@ -1,8 +1,16 @@
 language: python
-python:
-  - "3.9"
-install: "pip install -r requirements.txt"
-script: make clean coverage docs dist
+matrix:
+  include:
+    - python: 3.8
+      env: TOXENV=py38
+    - python: 3.9
+      env: TOXENV=py39
+install: "pip install -r requirements-dev.txt"
+script:
+  - invoke style-check
+  - invoke lint
+  - invoke test
+  - invoke docs
 deploy:
   provider: pypi
   user: nottyo
@@ -10,6 +18,5 @@ deploy:
     secure: mFvownc1BCD+vLkz9oK/wV3Mw3FSdmPHCV000q68DbXKaEmF0QBGgNjkn0s4LEXj7X4asYNJF8BCCnzQrgiOMtE9p+PmYhQMFuxqphEnrmmYsDOSjTU6JBdRwuyoUN8f704V9aswBgnMJb1xpLpu6loUVV0+2VAfG82z9uQH8t86Hg2/4QhJIoepzHvDmIk3YPnMcS3vAsHh3WbeLmgYk3c1aQQdES7bJGWyex5bo4C2gCACqEDfMeP0bqEtoTB5+dPtk4LsJUa/OSZz8BMl4LYuQdUpbmRgpfpdOWZygOaivUisWjgElGtlEsl1koWHz1KR6TpfzNVi9Sz9SrwibTnUyLCQdfmj/4oPfFER41PFgFdvbYe3IiPIeNKgQ2yzrnbL6vyeh27fbefsaJTJejd/eDvq78TF5E2YK/n200dUmejd0ISiW6JvySs7LkWeDlyPPzThc1Kg1rzii5MTsFV0UENmzdP6bspqNMOP6v9VEyxlTGfFmZwfTMc0jq2fWbww0CSE5QacFZts0xmi9x4syYaZooL7oCYo8ZIUdonXMbaVG4Wz11nsedbvSDS5zWswqVd+Kvj57kmtokzS0eCzN4u59slhdLpKYzSnUW+o/d5BxSJwOB2MLjth60yOj0TUEstu2mAiKY59pGH0nhiaSR5pKU6Rz5yXefVzeuA=
   on:
     tags: true
-    distributions: sdist bdist_wheel
+    distributions: dist
     repo: robotframework-thailand/robotframework-jsonlibrary
-
