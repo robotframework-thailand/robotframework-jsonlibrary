@@ -99,14 +99,14 @@ TestValidateJsonBySchema
 TestValidateJsonBySchemaFileFail
     [Documentation]    Validate Json by schema file and fail
     ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
-    Run Keyword And Expect Error    Json does not match the schema: *
+    Run Keyword And Expect Error    * is a required property, Schema path: *
     ...     Validate Json By Schema File    ${new_json}   ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
 
 TestValidateJsonBySchemaFail
     [Documentation]    Validate Json by schema and fail
     ${schema}    Load Json From File    ${CURDIR}${/}..${/}tests${/}json${/}example_schema.json
     ${new_json}   Delete Object From Json    ${json_obj_input}    $..phoneNumbers
-    Run Keyword And Expect Error    Json does not match the schema: *
+    Run Keyword And Expect Error    * is a required property, Schema path: *
     ...     Validate Json By Schema    ${new_json}   ${schema}
 
 TestValidateJsonByInvalidSchemaFile
