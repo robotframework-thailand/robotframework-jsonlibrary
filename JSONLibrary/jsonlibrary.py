@@ -313,6 +313,6 @@ class JSONLibrary:
         try:
             jsonschema.validate(json_object, schema)
         except jsonschema.ValidationError as e:
-            fail(f"Json does not match the schema: {e.schema}")
+            fail(f"{e.message}, Schema path: {' > '.join(e.schema_path)}")
         except jsonschema.SchemaError as e:
             fail(f"Json schema error: {e}")
