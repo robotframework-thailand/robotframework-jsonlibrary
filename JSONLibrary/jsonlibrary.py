@@ -202,18 +202,19 @@ class JSONLibrary:
         return json_object_cpy
 
     @staticmethod
-    def convert_json_to_string(json_object):
+    def convert_json_to_string(json_object, indent=None):
         """Convert JSON object to string
 
         Arguments:
             - json_object: json as a dictionary object.
+            - indent: indent level for pretty-printing.
 
         Return new json_string
 
         Examples:
         | ${json_str}=  |  Convert JSON To String | ${json_obj} |
         """
-        return json.dumps(json_object)
+        return json.dumps(json_object, indent=indent)
 
     @staticmethod
     def convert_string_to_json(json_string):
