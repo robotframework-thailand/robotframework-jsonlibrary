@@ -34,7 +34,7 @@ jobs:
       run: pylint JSONLibrary --disable=R,C,W0703,W0212,W1203
     
     - name: check doc generation
-      run: python -m robot.libdoc JSONLibrary docs/JSONLibrary.html"
+      run: python -m robot.libdoc JSONLibrary docs/JSONLibrary.html
     
     - name: check black
       run: black . --check --diff
