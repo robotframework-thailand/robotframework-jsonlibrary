@@ -207,12 +207,12 @@ class JSONLibrary:
 
         Arguments:
             - json_object: json as a dictionary object.
-            - indent: indent level for pretty-printing.
+            - indent: indent level for pretty-printing, see indent argument of python's [https://docs.python.org/3/library/json.html#json.dump|json.dump()] for details
 
         Return new json_string
 
         Examples:
-        | ${json_str}=  |  Convert JSON To String | ${json_obj} |
+        | ${json_str}=  |  Convert JSON To String | ${json_obj} | ${4} |
         """
         return json.dumps(json_object, indent=indent)
 
