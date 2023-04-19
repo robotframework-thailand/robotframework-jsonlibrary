@@ -3,7 +3,7 @@
 
 name: Python application
 
-on: [push, pull_request]
+on: pull_request
 
 permissions:
   contents: read
@@ -27,8 +27,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
+        python -m pip install -e .
+        python -m pip install -r requirements-dev.txt
     
     - name: check pylint 
       run: pylint JSONLibrary --disable=R,C,W0703,W0212,W1203
@@ -71,7 +71,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m pip install -e .
+        python -m pip install -r requirements-dev.txt
     
     - name: validate
       run: |
