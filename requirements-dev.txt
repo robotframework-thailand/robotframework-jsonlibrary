@@ -6,3 +6,4 @@ black
 tox
 pytest
 pytest-cov
+flake8
