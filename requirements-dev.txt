@@ -1,9 +1,8 @@
 twine
 wheel
 pylint
-invoke
 black
-tox
 pytest
 pytest-cov
+coverage
 flake8
