@@ -3,9 +3,10 @@
 
 name: Release
 
-on:
-  release:
-    types: [published]
+on: 
+  push:
+    tags:
+      - test**
 
 permissions:
   contents: read
@@ -30,4 +31,4 @@ jobs:
         python -m pip install -e .[dev]
     
     - name: publish
-      run: invoke publish
+      run: invoke publish_test
