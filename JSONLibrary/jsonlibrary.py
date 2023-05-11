@@ -212,7 +212,8 @@ class JSONLibrary:
         Return new json_string
 
         Examples:
-        | ${json_str}=  |  Convert JSON To String | ${json_obj} | ${4} |
+        | ${json_str}=  |  Convert JSON To String | ${json_obj} |
+        | ${json_str}=  |  Convert JSON To String | ${json_obj} | indent=${4} |
         """
         return json.dumps(json_object, indent=indent)
 
