@@ -153,6 +153,11 @@ class TestJSONLibrary:
         json_str = self.json_library.convert_json_to_string(json)
         assert isinstance(json_str, str)
 
+    def test_convert_json_to_string_with_indent(self, json):
+        json_str = self.json_library.convert_json_to_string(json, indent=4)
+        assert len(json_str_as_list := json_str.split("\n")) == 45
+        assert json_str_as_list[1][:4] == " " * 4
+
     def test_convert_string_to_json(self, json):
         json_obj = self.json_library.convert_string_to_json('{"firstName": "John"}')
         assert "firstName" in json_obj
