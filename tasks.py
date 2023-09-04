@@ -17,7 +17,6 @@ def clean(_):
         os.path.join("tests", "__out__"),
         ignore_errors=True,
     )
-    shutil.rmtree(".tox", ignore_errors=True)
     shutil.rmtree(".pytest_cache", ignore_errors=True)
     shutil.rmtree("build", ignore_errors=True)
     shutil.rmtree("dist", ignore_errors=True)
@@ -47,33 +46,11 @@ def install(ctx):
     ctx.run(f"{sys.executable} -m pip install {wheel_file}", hide="both")
 
 
-@task(install)
-def test(ctx):
-    ctx.run("tox")
-
-
-@task
-def style_check(ctx):
-    ctx.run("black . --check --diff")
-
-
-@task
-def reformat_code(ctx):
-    ctx.run("black .")
-
-
-@task
+@task(build)
 def publish(ctx):
     ctx.run(f"{sys.executable} -m twine upload dist/*")
 
 
-@task
-def docs(ctx):
-    ctx.run(f"{sys.executable} -m robot.libdoc JSONLibrary docs/JSONLibrary.html")
-
-
-@task(install)
-def lint(ctx):
-    ctx.run("pylint JSONLibrary --disable=R,C,W0703,W0212,W1203")
-    uninstall(ctx)
-    clean(ctx)
+@task(build)
+def publish_test(ctx):
+    ctx.run(f"{sys.executable} -m twine upload --repository testpypi dist/*")

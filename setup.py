@@ -6,9 +6,11 @@ version = {}
 with open(os.path.join(HERE, "JSONLibrary", "__version__.py"), encoding="utf8") as f:
     exec(f.read(), version)
 
-requirements = [
-    i.strip() for i in open("requirements.txt", encoding="utf8").readlines()
-]
+
+def readfile(_file):
+    with open(_file, encoding="utf8") as fh:
+        return [i.strip() for i in fh.readlines()]
+
 
 setup(
     name="robotframework-jsonlibrary",
@@ -21,7 +23,8 @@ setup(
     url="https://github.com/nottyo/robotframework-jsonlibrary.git",
     packages=["JSONLibrary"],
     package_dir={"robotframework-jsonlibrary": "JSONLibrary"},
-    install_requires=requirements,
+    install_requires=readfile("requirements.txt"),
+    extras_require={"dev": readfile("requirements-dev.txt")},
     include_package_data=True,
     keywords="testing robotframework json jsonschema jsonpath",
     classifiers=[
