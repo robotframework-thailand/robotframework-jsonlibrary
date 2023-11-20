@@ -82,6 +82,18 @@ TestConvertJSONToString
     ${json_str}=    Convert Json To String    ${json_obj_input}
     Should Be String    ${json_str}
 
+TestEnsureAsciiDefault
+    ${data} =   Set Variable    "{'test':'ueber'}"
+    ${json} =    Convert String To Json    ${data}
+    ${string} =     Convert Json To String    ${json}
+    Should Be Equal    ${string}   ${data}
+
+TestEnsureAsciiFalse
+    ${data} =   Set Variable    "{'test':'über'}"
+    ${json} =    Convert String To Json    ${data}
+    ${string} =     Convert Json To String    ${json}   ensure_ascii=False
+    Should Be Equal    ${string}   ${data}
+
 TestDumpJSONToFile
     [Documentation]    Dumps Json to file
     Dump Json to file    ${TEMPDIR}/sample_dump.json    ${json_obj_input}
